@@ -2,25 +2,10 @@
 const { Router } = require('express')
 const express = require('express')
 const router = express.Router()
+const {getGoal, setGoal, updateGoal,deleteGoal} = require('../controllers/goalController')
 
-// get goals endpoint
-router.get('/', (req,res) => {
-    res.status(200).json({ message: 'Get Goals'})
-})
-
-// create goals endpoint
-router.post('/', (req,res) => {
-    res.status(201).json({ message: 'Create Goals'})
-})
-
-// update goals endpoint(we need to specify the id of the goal to update)
-router.put('/:id', (req,res) => {
-    res.status(200).json({ message: `Updated goal with the id ${req.params.id}`})
-})
-
-// delete goals endpoint(we need to specify the id of the goal to update)
-router.delete('/:id', (req,res) => {
-    res.status(200).json({ message: `Deleted goal with the id ${req.params.id} `})
-})
+// cleaning up our code by chaining the same routes to one function
+router.route('/').get(getGoal).post(setGoal)
+router.route('/:id').delete(deleteGoal).put(updateGoal)
 
 module.exports = router
